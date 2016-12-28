@@ -49,7 +49,7 @@ class LoadContentProviderData implements FixtureInterface, ContainerAwareInterfa
     {
         $this->manager = $manager;
 
-        $this->addContentProvider('webcookcms.common.menu_content_provider');
+        $this->addContentProvider('webcookcms.core.menu_content_provider');
         
         $this->manager->flush();
     }

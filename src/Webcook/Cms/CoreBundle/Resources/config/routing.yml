@@ -8,6 +8,6 @@ webcook_cms_core_page:
     type:     rest
     prefix: /api
 
-webcook_cms_frontend_page:
+webcook_cms_core_frontend_page:
     resource: "."
     type: webcookcms_page

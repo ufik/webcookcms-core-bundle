@@ -18,7 +18,7 @@ use Symfony\Component\DependencyInjection\Loader;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class WebcookCmsCommonExtension extends Extension
+class WebcookCmsCoreExtension extends Extension
 {
     /**
      * {@inheritdoc}

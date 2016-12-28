@@ -24,7 +24,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('webcookcms_common');
+        $rootNode = $treeBuilder->root('webcookcms_core');
 
         return $treeBuilder;
     }
