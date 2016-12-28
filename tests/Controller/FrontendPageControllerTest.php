@@ -4,6 +4,12 @@ namespace Webcook\Cms\CoreBundle\Tests\Controller;
 
 class FrontendPageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
 {
+
+    public function setUp($clearCache = false)
+    {
+        parent::setUp(true);
+    }
+
     public function testGetPage()
     {
         $this->loadData();

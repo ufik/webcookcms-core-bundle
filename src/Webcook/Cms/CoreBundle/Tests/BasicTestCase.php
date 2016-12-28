@@ -24,6 +24,10 @@ abstract class BasicTestCase extends WebTestCase
         $classNames[] = 'Webcook\Cms\SecurityBundle\DataFixtures\ORM\LoadResourcesData';
         $classNames[] = 'Webcook\Cms\SecurityBundle\DataFixtures\ORM\LoadRoleData';
         $classNames[] = 'Webcook\Cms\SecurityBundle\DataFixtures\ORM\LoadUserData';
+        $classNames[] = 'Webcook\Cms\CoreBundle\DataFixtures\ORM\LoadContentProviderData';
+        $classNames[] = 'Webcook\Cms\CoreBundle\DataFixtures\ORM\LoadSectionData';
+        $classNames[] = 'Webcook\Cms\CoreBundle\DataFixtures\ORM\LoadLanguageData';
+        $classNames[] = 'Webcook\Cms\CoreBundle\DataFixtures\ORM\LoadPageData';
 
         parent::loadFixtures($classNames, $omName, $registryName, $purgeMode);
     }
@@ -38,19 +42,14 @@ abstract class BasicTestCase extends WebTestCase
     /**
      * {@inheritDoc}
      */
-    public function setUp($clearCache = false)
+    public function setUp()
     {
         self::bootKernel();
+        
         $this->container = static::$kernel->getContainer();
         $this->em = static::$kernel->getContainer()
             ->get('doctrine')
             ->getManager();
-
-        if ($clearCache) {
-            $fs = new Filesystem();
-            echo 'clear cache set up';
-            $fs->remove($this->container->getParameter('kernel.cache_dir'));
-        }
 
         $this->loadFixtures(array());
     }

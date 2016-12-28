@@ -13,7 +13,7 @@ class MenuContentProviderTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCas
         $page = $this->em->getRepository('Webcook\Cms\CoreBundle\Entity\Page')->find(1);
         $section = $page->getSections()[0]->getSection();
 
-        $menuContentProvider = $this->container->get('webcookcms.common.menu_content_provider');
+        $menuContentProvider = $this->container->get('webcookcms.core.menu_content_provider');
         $content = $menuContentProvider->getContent($page, $section);
         
         $this->assertContains('/main', $content);
