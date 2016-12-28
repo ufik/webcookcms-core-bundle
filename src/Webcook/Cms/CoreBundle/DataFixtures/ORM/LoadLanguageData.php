@@ -49,18 +49,19 @@ class LoadLanguageData implements FixtureInterface, ContainerAwareInterface, Ord
     {
         $this->manager = $manager;
 
-        $this->addLanguage('Čeština', 'cs');
+        $this->addLanguage('Čeština', 'cs', true);
         $this->addLanguage('English', 'en');
         $this->addLanguage('Deutsch', 'de');
         
         $this->manager->flush();
     }
 
-    private function addLanguage(String $title, String $abbr)
+    private function addLanguage(String $title, String $abbr, Bool $default = false)
     {
         $language = new Language();
-        $language->setTitle($title);
-        $language->setAbbr($abbr);
+        $language->setTitle($title)
+                 ->setAbbr($abbr)
+                 ->setDefault($default);
 
         $this->manager->persist($language);
     }

@@ -13,6 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\BooleanType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 /**
@@ -39,7 +40,12 @@ class LanguageType extends AbstractType
                 'constraints' => array(
                     new NotBlank(array('message' => 'common.languages.form.abbr.required')),
                 ),
-                'label' => 'common.Languages.form.abbr',
+                'label' => 'common.languages.form.abbr',
+            ))->add('default', BooleanType::class, array(
+                'constraints' => array(
+                    new NotBlank(array('message' => 'common.languages.form.default.required')),
+                ),
+                'label' => 'common.languages.form.default',
             ))->add('version', HiddenType::class, array('mapped' => false));
     }
 

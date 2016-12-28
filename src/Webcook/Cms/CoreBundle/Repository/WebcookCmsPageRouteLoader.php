@@ -25,10 +25,12 @@ class WebcookCmsPageRouteLoader extends Loader
     {
         $routes = new RouteCollection();
 
-        $pages = $this->em->getRepository('\Webcook\Cms\CoreBundle\Entity\Page')->findAll();
+        $criteria = new \Doctrine\Common\Collections\Criteria();
+        $criteria->where($criteria->expr()->gt('lvl', 0));
+
+        $pages = $this->em->getRepository('\Webcook\Cms\CoreBundle\Entity\Page')->matching($criteria);
         foreach ($pages as $page) {
-            $path = $page->getLanguage()->getAbbr().'/'.$page->getSlug();
-            $route = new Route($path, array(
+            $route = new Route($page->getPath(), array(
                 '_controller' => 'WebcookCmsCoreBundle:FrontendPage:render',
                 'page'        => $page->getId()
             ), array());

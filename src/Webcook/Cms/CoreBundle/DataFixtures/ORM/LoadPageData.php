@@ -57,12 +57,15 @@ class LoadPageData implements FixtureInterface, ContainerAwareInterface, Ordered
         $sections = $this->manager->getRepository('Webcook\Cms\CoreBundle\Entity\Section')->findAll();
         $contentProviders = $this->manager->getRepository('Webcook\Cms\CoreBundle\Entity\ContentProvider')->findAll();
 
-        $this->addPage('Main', $languages[0], $sections[0], $contentProviders[0]);
-        $this->manager->flush();
-        $parent = $this->manager->getRepository('Webcook\Cms\CoreBundle\Entity\Page')->findAll();
-        $this->addPage('Home', $languages[0], null, null, $parent[0]);
+        $main = $this->addPage('Main', $languages[1], $sections[0], $contentProviders[0]);
+        $home = $this->addPage('Home', $languages[1], null, null, $main);
+        $this->addPage('Photogallery', $languages[1], null, null, $home);
+        $this->addPage('Contact', $languages[1], null, null, $main);
 
-        $this->addPage('Footer', $languages[0], $sections[0], $contentProviders[0], null);
+        $this->addPage('Footer', $languages[1], $sections[0], $contentProviders[0], null);
+
+        $main = $this->addPage('Main', $languages[0], $sections[0], $contentProviders[0]);
+        $this->addPage('Uvod', $languages[0], null, null, $main);
 
         $this->manager->flush();
     }
@@ -85,6 +88,8 @@ class LoadPageData implements FixtureInterface, ContainerAwareInterface, Ordered
         $page->setParent($parent);
         
         $this->manager->persist($page);
+
+        return $page;
     }
 
     /**

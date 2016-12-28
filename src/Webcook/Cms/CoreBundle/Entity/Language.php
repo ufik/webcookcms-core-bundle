@@ -23,6 +23,9 @@ class Language extends BasicEntity
      */
     private $abbr;
 
+    /** @ORM\Column(name="isDefault", type="boolean") */
+    private $default = false;
+
     /**
      * Set title.
      *
@@ -69,5 +72,29 @@ class Language extends BasicEntity
     public function getAbbr()
     {
         return $this->abbr;
+    }
+
+    /**
+     * Set whether language is default or not.
+     *
+     * @param String $default Default of a language.
+     *
+     * @return Language Returns self.
+     */
+    public function setDefault($default)
+    {
+        $this->default = $default;
+
+        return $this;
+    }
+
+    /**
+     * Get whether language is default or not.
+     *
+     * @return String Returns if language is default.
+     */
+    public function isDefault()
+    {
+        return $this->default;
     }
 }
