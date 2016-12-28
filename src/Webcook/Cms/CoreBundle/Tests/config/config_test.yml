@@ -1,0 +1,38 @@
+imports:
+    - { resource: config.yml }
+    - { resource: security_test.yml }
+    - { resource: parameters.yml }
+
+framework:
+    test: ~
+    session:
+        storage_id: session.storage.filesystem
+    profiler:
+        collect: false
+
+liip_functional_test:
+
+web_profiler:
+    toolbar: false
+    intercept_redirects: false
+
+swiftmailer:
+    disable_delivery: true
+
+doctrine:
+    dbal:
+        driver: pdo_sqlite
+        path: "%kernel.cache_dir%/test.db"
+        charset:  UTF8
+    orm:
+        entity_managers:
+            default:
+                auto_mapping: true
+        auto_generate_proxy_classes: "%kernel.debug%"
+
+stof_doctrine_extensions:
+    default_locale: en_US
+    orm:
+        default:
+            tree: true
+            sluggable: true

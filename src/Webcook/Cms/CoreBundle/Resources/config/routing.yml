@@ -1,0 +1,13 @@
+webcook_cms_core_language:
+    resource: "@WebcookCmsCoreBundle/Controller/LanguageController.php"
+    type:     rest
+    prefix: /api
+
+webcook_cms_core_page:
+    resource: "@WebcookCmsCoreBundle/Controller/PageController.php"
+    type:     rest
+    prefix: /api
+
+webcook_cms_frontend_page:
+    resource: "."
+    type: webcookcms_page

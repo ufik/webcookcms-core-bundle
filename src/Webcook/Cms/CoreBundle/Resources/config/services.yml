@@ -1,0 +1,11 @@
+services:
+    webcookcms.core.orm_route_provider:
+        class:        Webcook\Cms\CoreBundle\Repository\WebcookCmsPageRouteLoader
+        arguments:    ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: routing.loader }
+    webcookcms.core.menu_content_provider:
+        class: Webcook\Cms\CoreBundle\ContentProvider\MenuContentProvider
+        arguments: ["@service_container"]
+        tags:
+            - { name: webcookcms.content_provider }

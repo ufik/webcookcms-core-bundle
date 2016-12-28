@@ -1,0 +1,6 @@
+/vendor/
+/composer.lock
+/coverage-html/
+/temp
+src/Webcook/Cms/CoreBundle/Tests/cache/
+cache

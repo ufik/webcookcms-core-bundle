@@ -1,0 +1,13 @@
+_logout:
+    path:   /logout
+
+login:
+    path:     /login
+    defaults: { _controller: WebcookCmsSecurityBundle:Login:login }
+    options:
+        i18n: false
+
+login_check:
+    path: /login_check
+    options:
+        i18n: false

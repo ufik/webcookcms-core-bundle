@@ -1,0 +1,7 @@
+webcook_cms_security:
+    resource: "@WebcookCmsSecurityBundle/Resources/config/routing.yml"
+webcook_cms_common:
+    resource: "@WebcookCmsCoreBundle/Resources/config/routing.yml"
+webcook_cms_test:
+    resource: "@WebcookCmsCoreBundle/Tests/Helpers/Controller/TestController.php"
+    type: rest

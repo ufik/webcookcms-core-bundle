@@ -1,0 +1,24 @@
+parameters:
+    resources_path: %kernel.root_dir%/../../../../../src/Webcook/Cms/CoreBundle/Controller
+
+framework:
+    #esi:             ~
+    translator:      { fallback: "en" }
+    router:
+        resource: "%kernel.root_dir%/../../../../../tests/routing.yml"
+
+fos_rest:
+    param_fetcher_listener: true
+    body_listener: true
+    format_listener: true
+    routing_loader:
+        default_format: json
+        include_format: true
+
+tbbc_money:
+    currencies: ["USD", "EUR"]
+    reference_currency: "EUR"
+    decimals: 2
+    ratio_provider: tbbc_money.ratio_provider.google
+    enable_pair_history: true
+    storage: doctrine

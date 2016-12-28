@@ -1,0 +1,42 @@
+{
+    "name": "webcookcms/core-bundle",
+    "description": "WebcookCMS core library.",
+    "keywords": ["core", "cms"],
+    "minimum-stability" : "dev",
+    "prefer-stable": true,
+    "type": "symfony-bundle",
+    "authors": [
+        {
+            "name": "Tomas Voslar"
+        }
+    ],
+    "require": {
+        "php": ">=7.0",
+        "symfony/symfony": "3.2.*",
+        "symfony/swiftmailer-bundle": "^2.3",
+        "symfony/monolog-bundle": "~2.4",
+        "doctrine/orm": "^2.5",
+        "doctrine/doctrine-bundle": "^1.6",
+        "doctrine/doctrine-fixtures-bundle": "^2.3",
+        "incenteev/composer-parameter-handler": "^2.0",
+        "friendsofsymfony/rest-bundle": "@stable",
+        "nelmio/api-doc-bundle": "@stable",
+        "symfony/event-dispatcher": "~3.2",
+        "stof/doctrine-extensions-bundle": "~1.2",
+        "sensio/framework-extra-bundle": "~3.0",
+        "jms/serializer-bundle": "^1.1",
+        "symfony/assetic-bundle": "^2.8",
+        "liip/functional-test-bundle": "~1.0",
+        "sensio/distribution-bundle": "^5.0",
+        "tbbc/money-bundle": "^3.1",
+        "webcookcms/security-bundle": "~1.0@dev"
+    },
+    "autoload": {
+        "psr-0": { "Webcook\\Cms\\CoreBundle": "src/" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+}
