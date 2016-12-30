@@ -37,17 +37,25 @@ class MenuContentProviderSettingsController extends BaseRestController
      *      {"name"="SectionId", "dataType"="integer", "required"=true, "description"="Section id."}
      *  }
      * )
-     * @Get("/content-providers/menu/settings/{id}", options={"i18n"=false})
+     * @Get("/content-providers/menu/settings/{pageId}/{sectionId}", options={"i18n"=false})
      */
     public function getMenuContentProviderSettingsAction($pageId, $sectionId)
     {
         $this->checkPermission(WebcookCmsVoter::ACTION_VIEW);
 
+        $page     = $this->getEntityManager()->getRepository('Webcook\Cms\CoreBundle\Entity\Page')->find($pageId);
+        $section  = $this->getEntityManager()->getRepository('Webcook\Cms\CoreBundle\Entity\Section')->find($sectionId);
+
         $settings = $this->getEntityManager()->getRepository('Webcook\Cms\CoreBundle\Entity\MenuContentProviderSettings')->findOneBy(array(
-            'page'    => $pageId,
-            'section' => $sectionId
+            'page'    => $page,
+            'section' => $section
         ));
-        $view = $this->view($settings, 200);
+
+        if (is_null($settings)) {
+            $view = $this->getViewWithMessage(null, 400, 'Settings not found.');
+        } else {
+            $view = $this->view($settings, 200);
+        }
 
         return $this->handleView($view);
     }
@@ -98,9 +106,9 @@ class MenuContentProviderSettingsController extends BaseRestController
         $this->checkPermission(WebcookCmsVoter::ACTION_EDIT);
 
         try {
-            $settings = $this->getPageById($id, $this->getLockVersion((string) new MenuContentProviderSettings()));
+            $settings = $this->getSettingsById($id, $this->getLockVersion((string) new MenuContentProviderSettings()));
         } catch (NotFoundHttpException $e) {
-            $settings = new Page();
+            $settings = new MenuContentProviderSettings();
         }
 
         $response = $this->processSettingsForm($settings, 'PUT');
@@ -129,7 +137,7 @@ class MenuContentProviderSettingsController extends BaseRestController
      *     {"name"="SettingId", "dataType"="integer", "required"=true, "description"="Page id."}
      *  }
      * )
-     * @Delete("/content-providers/menu/settings", options={"i18n"=false})
+     * @Delete("/content-providers/menu/settings/{id}", options={"i18n"=false})
      */
     public function deleteMenuContentProviderSettingsAction($id)
     {
@@ -153,7 +161,7 @@ class MenuContentProviderSettingsController extends BaseRestController
      *
      * @return Form [description]
      */
-    private function processPageForm(MenuContentProviderSettings $settings, String $method = 'POST')
+    private function processSettingsForm(MenuContentProviderSettings $settings, String $method = 'POST')
     {
         $form = $this->createForm(MenuContentProviderSettingsType::class, $settings);
         $form = $this->formSubmit($form, $method);

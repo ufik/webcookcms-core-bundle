@@ -61,6 +61,6 @@ class MenuContentProviderSettingsType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'menu_content_provider';
+        return 'menu_content_provider_settings';
     }
 }
