@@ -16,6 +16,7 @@ use Webcook\Cms\CoreBundle\Entity\PageSection;
 use Webcook\Cms\CoreBundle\Entity\Language;
 use Webcook\Cms\CoreBundle\Entity\Section;
 use Webcook\Cms\CoreBundle\Entity\ContentProvider;
+use Webcook\Cms\CoreBundle\Entity\MenuContentProviderSettings;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -57,15 +58,46 @@ class LoadPageData implements FixtureInterface, ContainerAwareInterface, Ordered
         $sections = $this->manager->getRepository('Webcook\Cms\CoreBundle\Entity\Section')->findAll();
         $contentProviders = $this->manager->getRepository('Webcook\Cms\CoreBundle\Entity\ContentProvider')->findAll();
 
-        $main = $this->addPage('Main', $languages[1], $sections[0], $contentProviders[0]);
-        $home = $this->addPage('Home', $languages[1], null, null, $main);
+        // english main menu
+        $mainen = $this->addPage('Main', $languages[1], $sections[0], $contentProviders[0]);
+        $home = $this->addPage('Home', $languages[1], null, null, $mainen);
         $this->addPage('Photogallery', $languages[1], null, null, $home);
-        $this->addPage('Contact', $languages[1], null, null, $main);
+        $this->addPage('Contact', $languages[1], null, null, $mainen);
 
+        $settings = new MenuContentProviderSettings();
+        $settings->setPage($mainen)
+            ->setSection($sections[0])
+            ->setParent($mainen);
+        
+        $this->manager->persist($settings);
+
+        // footer menu
         $this->addPage('Footer', $languages[1], $sections[0], $contentProviders[0], null);
 
+        // Czech main menu
         $main = $this->addPage('Main', $languages[0], $sections[0], $contentProviders[0]);
         $this->addPage('Uvod', $languages[0], null, null, $main);
+
+        $settings = new MenuContentProviderSettings();
+        $settings->setPage($main)
+            ->setSection($sections[0])
+            ->setParent($main);
+
+        $this->manager->persist($settings);
+
+        $pageSection = new PageSection();
+        $pageSection->setPage($main)
+            ->setSection($sections[1])
+            ->setContentProvider($contentProviders[0]);
+
+        $this->manager->persist($pageSection);
+
+        $settings = new MenuContentProviderSettings();
+        $settings->setPage($main)
+            ->setSection($sections[1])
+            ->setParent($mainen);
+
+        $this->manager->persist($settings);
 
         $this->manager->flush();
     }

@@ -18,9 +18,9 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 /**
- * Page form type.
+ * Settings form type.
  */
-class PageType extends AbstractType
+class MenuContentProviderSettingsType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -31,27 +31,14 @@ class PageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', TextType::class, array(
-                'constraints' => array(
-                    new NotBlank(array('message' => 'common.pages.form.title.required')),
-                ),
-                'label' => 'common.pages.form.name',
-            ))
-            ->add('layout', TextType::class, array(
-                'constraints' => array(
-                    new NotBlank(array('message' => 'common.pages.form.layout.required')),
-                ),
-                'label' => 'common.pages.form.layout',
-            ))
             ->add('parent', EntityType::class, array(
                 'class' => 'WebcookCmsCoreBundle:Page'
             ))
-            ->add('language', EntityType::class, array(
-                'class' => 'WebcookCmsCoreBundle:Language'
+            ->add('page', EntityType::class, array(
+                'class' => 'WebcookCmsCoreBundle:Page'
             ))
-            ->add('sections', CollectionType::class, array(
-                'entry_type' => PageSectionType::class,
-                'allow_add' => true
+            ->add('section', EntityType::class, array(
+                'class' => 'WebcookCmsCoreBundle:Section'
             ))
             ->add('version', HiddenType::class, array('mapped' => false));
     }
@@ -64,7 +51,7 @@ class PageType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => \Webcook\Cms\CoreBundle\Entity\Page::class,
+            'data_class' => \Webcook\Cms\CoreBundle\Entity\MenuContentProviderSettings::class,
             'csrf_protection'   => false,
         ));
     }
@@ -74,6 +61,6 @@ class PageType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'page';
+        return 'menu_content_provider';
     }
 }

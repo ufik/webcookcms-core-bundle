@@ -8,22 +8,35 @@
 
 namespace Webcook\Cms\CoreBundle\ContentProvider;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Webcook\Cms\CoreBundle\Entity\Page;
 use Webcook\Cms\CoreBundle\Entity\Section;
+use Webcook\Cms\CoreBundle\Entity\MenuContentProviderSettings;
 
 class MenuContentProvider extends AbstractContentProvider
 {
+    private $pageRepository;
+
+    /** @inheritDoc */
+    public function __construct(ContainerInterface $container)
+    {
+        parent::__construct($container);
+
+        $this->pageRepository = $this->em->getRepository('\Webcook\Cms\CoreBundle\Entity\Page');
+    }
+
+    /** @inheritDoc */
     public function getContent(Page $page, Section $section): string
     {
-        $pageRepo = $this->em->getRepository('\Webcook\Cms\CoreBundle\Entity\Page');
         $router   = $this->router;
+        $settings = $this->resolveSettings($page, $section);
 
         return $this->twig->render(
             'WebcookCmsCoreBundle:ContentProvider:menu.html.twig',
             array(
-                'htmlTree' => $pageRepo->childrenHierarchy(
-                    $pageRepo->findAll()[0], /* starting from root nodes */
-                    false, /* true: load all children, false: only direct */
+                'htmlTree' => $this->pageRepository->childrenHierarchy(
+                    $settings->getParent(), /* null: starting from root nodes */
+                    $settings->getDirectChildren(), /* true: load all children, false: only direct */
                     array(
                         'decorate' => true,
                         'html' => true,
@@ -37,5 +50,27 @@ class MenuContentProvider extends AbstractContentProvider
                 )
             )
         );
+    }
+
+    private function resolveSettings(Page $page, Section $section): MenuContentProviderSettings
+    {
+        // TODO add caching, invalidate after change of settings table ?
+        $settings = null;
+        while(is_null($settings) && $page) {
+            $settings = $this->em->getRepository('\Webcook\Cms\CoreBundle\Entity\MenuContentProviderSettings')->findOneBy(array(
+                'page'    => $page,
+                'section' => $section
+            ));
+
+            $page = $page->getParent();
+        }
+
+        // fallback, pick first page TODO: rewrite to default page
+        if (is_null($settings)) {
+            $settings = new MenuContentProviderSettings;
+            $settings->setParent($this->pageRepository->findAll()[0]);
+        }
+
+        return $settings;
     }
 }

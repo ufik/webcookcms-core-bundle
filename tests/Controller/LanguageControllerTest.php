@@ -6,7 +6,6 @@ class LanguageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
 {
     public function testGetLanguages()
     {
-        $this->loadData();
         $this->createTestClient();
         $this->client->request('GET', '/api/languages');
 
@@ -18,7 +17,6 @@ class LanguageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
 
     public function testGetlanguage()
     {
-        $this->loadData();
         $this->createTestClient();
         $this->client->request('GET', '/api/languages/1');
         $language = $this->client->getResponse()->getContent();
@@ -33,7 +31,6 @@ class LanguageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
 
     public function testPost()
     {
-        $this->loadData();
         $this->createTestClient();
 
         $crawler = $this->client->request(
@@ -43,6 +40,7 @@ class LanguageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
                 'language' => array(
                     'title' => 'Test lang',
                     'abbr' => 'tl',
+                    'default' => true
                 ),
             )
         );
@@ -54,11 +52,12 @@ class LanguageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
         $this->assertCount(4, $languages);
         $this->assertEquals('Test lang', $languages[3]->getTitle());
         $this->assertEquals('tl', $languages[3]->getAbbr());
+        $this->assertTrue($languages[3]->isDefault());
+        $this->assertFalse($languages[0]->isDefault());
     }
 
     public function testPut()
     {
-        $this->loadData();
         $this->createTestClient();
 
         $this->client->request('GET', '/api/languages/2'); // save version into session
@@ -69,6 +68,7 @@ class LanguageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
                 'language' => array(
                     'title' => 'English updated',
                     'abbr' => 'en',
+                    'default' => true
                 ),
             )
         );
@@ -76,14 +76,16 @@ class LanguageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
         $this->assertTrue($this->client->getResponse()->isSuccessful());
 
         $language = $this->em->getRepository('Webcook\Cms\CoreBundle\Entity\language')->find(2);
+        $languages = $this->em->getRepository('Webcook\Cms\CoreBundle\Entity\language')->findAll();
 
         $this->assertEquals('English updated', $language->getTitle());
         $this->assertEquals('en', $language->getAbbr());
+        $this->assertTrue($language->isDefault());
+        $this->assertFalse($languages[0]->isDefault());
     }
 
     public function testDelete()
     {
-        $this->loadData();
         $this->createTestClient();
 
         $crawler = $this->client->request('DELETE', '/api/languages/2');
@@ -97,7 +99,6 @@ class LanguageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
 
     public function testWrongPost()
     {
-        $this->loadData();
         $this->createTestClient();
 
         $crawler = $this->client->request(
@@ -115,7 +116,6 @@ class LanguageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
 
     public function testPutNonExisting()
     {
-        $this->loadData();
         $this->createTestClient();
 
         $crawler = $this->client->request(
@@ -125,6 +125,7 @@ class LanguageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
                 'language' => array(
                     'title' => 'Spanish',
                     'abbr' => 'es',
+                    'default' => true
                 ),
             )
         );
@@ -136,11 +137,11 @@ class LanguageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
         $this->assertCount(4, $languages);
         $this->assertEquals('Spanish', $languages[3]->getTitle());
         $this->assertEquals('es', $languages[3]->getAbbr());
+        $this->assertFalse($languages[0]->isDefault());
     }
 
     public function testWrongPut()
     {
-        $this->loadData();
         $this->createTestClient();
 
         $crawler = $this->client->request(
@@ -154,12 +155,5 @@ class LanguageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
         );
 
         $this->assertEquals(400, $this->client->getResponse()->getStatusCode());
-    }
-
-    private function loadData()
-    {
-        $this->loadFixtures(array(
-            'Webcook\Cms\CoreBundle\DataFixtures\ORM\LoadLanguageData'
-        ));
     }
 }

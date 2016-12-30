@@ -8,6 +8,11 @@ webcook_cms_core_page:
     type:     rest
     prefix: /api
 
+webcook_cms_core_menu_content_provider_settings:
+    resource: "@WebcookCmsCoreBundle/Controller/MenuContentProviderSettingsController.php"
+    type:     rest
+    prefix: /api
+
 webcook_cms_core_frontend_page:
     resource: "."
     type: webcookcms_page

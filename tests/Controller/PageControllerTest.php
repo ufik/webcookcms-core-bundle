@@ -6,19 +6,17 @@ class PageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
 {
     public function testGetPages()
     {
-        $this->loadData();
         $this->createTestClient();
         $this->client->request('GET', '/api/pages');
 
         $pages = $this->client->getResponse()->getContent();
 
         $data = json_decode($pages, true);
-        $this->assertCount(3, $data);
+        $this->assertCount(7, $data);
     }
 
     public function testGetPage()
     {
-        $this->loadData();
         $this->createTestClient();
         $this->client->request('GET', '/api/pages/1');
         $page = $this->client->getResponse()->getContent();
@@ -34,7 +32,6 @@ class PageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
 
     public function testPost()
     {
-        $this->loadData();
         $this->createTestClient();
 
         $crawler = $this->client->request(
@@ -44,6 +41,7 @@ class PageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
                 'page' => array(
                     'title' => 'New menu',
                     'layout' => 'default',
+                    'language' => 1,
                     'sections' => array(array(
                         'section' => 1,
                         'contentProvider' => 1
@@ -56,14 +54,13 @@ class PageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
 
         $pages = $this->em->getRepository('Webcook\Cms\CoreBundle\Entity\Page')->findAll();
 
-        $this->assertCount(4, $pages);
-        $this->assertEquals('New menu', $pages[3]->getTitle());
-        $this->assertCount(1, $pages[3]->getSections());
+        $this->assertCount(8, $pages);
+        $this->assertEquals('New menu', $pages[7]->getTitle());
+        $this->assertCount(1, $pages[7]->getSections());
     }
 
     public function testPut()
     {
-        $this->loadData();
         $this->createTestClient();
 
         $this->client->request('GET', '/api/pages/2'); // save version into session
@@ -74,6 +71,7 @@ class PageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
                 'page' => array(
                     'title' => 'Updated menu',
                     'layout' => 'default',
+                    'language' => 1,
                     'sections' => array(array(
                         'section' => 1,
                         'contentProvider' => 1
@@ -92,7 +90,6 @@ class PageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
 
     public function testDelete()
     {
-        $this->loadData();
         $this->createTestClient();
 
         $crawler = $this->client->request('DELETE', '/api/pages/2');
@@ -101,12 +98,11 @@ class PageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
 
         $pages = $this->em->getRepository('Webcook\Cms\CoreBundle\Entity\Page')->findAll();
 
-        $this->assertCount(2, $pages);
+        $this->assertCount(5, $pages);
     }
 
     public function testWrongPost()
     {
-        $this->loadData();
         $this->createTestClient();
 
         $crawler = $this->client->request(
@@ -124,16 +120,16 @@ class PageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
 
     public function testPutNonExisting()
     {
-        $this->loadData();
         $this->createTestClient();
 
         $crawler = $this->client->request(
             'PUT',
-            '/api/pages/4',
+            '/api/pages/8',
             array(
                 'page' => array(
                     'title' => 'New menu',
                     'layout' => 'default',
+                    'language' => 1,
                     'sections' => array(array(
                         'section' => 1,
                         'contentProvider' => 1
@@ -146,14 +142,13 @@ class PageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
 
         $pages = $this->em->getRepository('Webcook\Cms\CoreBundle\Entity\Page')->findAll();
 
-        $this->assertCount(4, $pages);
-        $this->assertEquals('New menu', $pages[3]->getTitle());
-        $this->assertCount(1, $pages[3]->getSections());
+        $this->assertCount(8, $pages);
+        $this->assertEquals('New menu', $pages[7]->getTitle());
+        $this->assertCount(1, $pages[7]->getSections());
     }
 
     public function testWrongPut()
     {
-        $this->loadData();
         $this->createTestClient();
 
         $crawler = $this->client->request(
@@ -167,15 +162,5 @@ class PageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
         );
 
         $this->assertEquals(400, $this->client->getResponse()->getStatusCode());
-    }
-
-    private function loadData()
-    {
-        $this->loadFixtures(array(
-            'Webcook\Cms\CoreBundle\DataFixtures\ORM\LoadContentProviderData',
-            'Webcook\Cms\CoreBundle\DataFixtures\ORM\LoadSectionData',
-            'Webcook\Cms\CoreBundle\DataFixtures\ORM\LoadLanguageData',
-            'Webcook\Cms\CoreBundle\DataFixtures\ORM\LoadPageData'
-        ));
     }
 }

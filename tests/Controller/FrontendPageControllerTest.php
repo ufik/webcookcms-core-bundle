@@ -15,11 +15,24 @@ class FrontendPageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTest
         $this->loadData();
         $this->createTestClient();
 
-        $this->client->request('GET', '/cs/main/home');
+        $this->client->request('GET', '/en/home');
 
         $html = $this->client->getResponse()->getContent();
 
-        $this->assertContains('<a href="/cs/main">Main</a>', $html);
+        $this->assertContains('<a href="/en/home">Home</a>', $html);
+        $this->assertContains('<a href="/en/contact">Contact</a>', $html);
+    }
+
+    public function testGetDefaultLanguagePage()
+    {
+        $this->loadData();
+        $this->createTestClient();
+
+        $this->client->request('GET', '/uvod');
+
+        $html = $this->client->getResponse()->getContent();
+
+        $this->assertContains('<a href="/uvod">Uvod</a>', $html);
     }
 
     private function loadData()

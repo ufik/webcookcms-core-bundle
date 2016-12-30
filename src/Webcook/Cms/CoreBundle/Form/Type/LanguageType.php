@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\BooleanType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 /**
@@ -41,7 +41,7 @@ class LanguageType extends AbstractType
                     new NotBlank(array('message' => 'common.languages.form.abbr.required')),
                 ),
                 'label' => 'common.languages.form.abbr',
-            ))->add('default', BooleanType::class, array(
+            ))->add('default', CheckboxType::class, array(
                 'constraints' => array(
                     new NotBlank(array('message' => 'common.languages.form.default.required')),
                 ),

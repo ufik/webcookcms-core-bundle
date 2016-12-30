@@ -13,5 +13,13 @@ use Webcook\Cms\CoreBundle\Entity\Section;
 
 interface ContentProviderInterface
 {
+    /**
+     * Get string content.
+     *
+     * @param Page    $page    
+     * @param Section $section 
+     *
+     * @return String Rendered content.
+     */
     public function getContent(Page $page, Section $section): string;
 }

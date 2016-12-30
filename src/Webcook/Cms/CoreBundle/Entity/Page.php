@@ -132,7 +132,7 @@ class Page Extends BasicEntity
         return $this->parent;
     }
 
-    public function setLanguage(Language $language)
+    public function setLanguage($language)
     {
         $this->language = $language;
 

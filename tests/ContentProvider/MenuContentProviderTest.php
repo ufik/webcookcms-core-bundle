@@ -16,9 +16,8 @@ class MenuContentProviderTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCas
         $menuContentProvider = $this->container->get('webcookcms.core.menu_content_provider');
         $content = $menuContentProvider->getContent($page, $section);
         
-        $this->assertContains('/main', $content);
-        $this->assertContains('/main/home', $content);
-        $this->assertContains('/footer', $content);
+        $this->assertContains('/en/home', $content);
+        $this->assertContains('/en/contact', $content);
     }
 
     private function loadData()

@@ -181,6 +181,18 @@ class LanguageController extends BaseRestController
                 $this->getEntityManager()->persist($language);
             }
 
+            if ($language->isDefault()) {
+                $languages = $this->getEntityManager()->getRepository('Webcook\Cms\CoreBundle\Entity\Language')->findBy(array(
+                    'default' => true
+                ));
+
+                foreach ($languages as $l) {
+                    if ($l !== $language) {
+                        $l->setDefault(false);
+                    }
+                }
+            }
+
             $this->getEntityManager()->flush();
 
             return $language;
