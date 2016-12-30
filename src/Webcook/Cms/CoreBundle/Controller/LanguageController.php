@@ -168,7 +168,7 @@ class LanguageController extends BaseRestController
      * @param Language   $language
      * @param string     $method Method of request
      *
-     * @return Form [description]
+     * @return Symfony\Component\Form\Form [description]
      */
     private function processLanguageForm(Language $language, String $method = 'POST')
     {

@@ -159,7 +159,7 @@ class MenuContentProviderSettingsController extends BaseRestController
      * @param Page   $settings
      * @param string $method Method of request
      *
-     * @return Form [description]
+     * @return Symfony\Component\Form\Form [description]
      */
     private function processSettingsForm(MenuContentProviderSettings $settings, String $method = 'POST')
     {

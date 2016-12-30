@@ -166,7 +166,7 @@ class PageController extends BaseRestController
      * @param Page   $page
      * @param string $method Method of request
      *
-     * @return Form [description]
+     * @return Symfony\Component\Form\Form [description]
      */
     private function processPageForm(Page $page, String $method = 'POST')
     {
