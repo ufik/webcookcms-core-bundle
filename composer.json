@@ -29,7 +29,8 @@
         "liip/functional-test-bundle": "~1.0",
         "sensio/distribution-bundle": "^5.0",
         "tbbc/money-bundle": "^3.1",
-        "webcookcms/security-bundle": "~1.0@dev"
+        "webcookcms/security-bundle": "~1.0@dev",
+        "webcookcms/i18n-bundle": "~1.0@dev"
     },
     "autoload": {
         "psr-0": { "Webcook\\Cms\\CoreBundle": "src/" }

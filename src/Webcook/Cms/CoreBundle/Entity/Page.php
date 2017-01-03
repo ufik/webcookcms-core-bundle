@@ -162,6 +162,11 @@ class Page Extends BasicEntity
             return $this->parent->getSections(true);
         }
 
+        // FIXME, need to merge sections and lookup into parent for single items!
+        if (!is_null($this->parent)) {
+            $this->sections = new ArrayCollection(array_merge($this->sections->toArray(), $this->parent->getSections()->toArray()));
+        }
+
         return $this->sections;
     }
 

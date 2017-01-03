@@ -12,8 +12,8 @@ use Webcook\Cms\CoreBundle\Base\BasicEntity;
  */
 class MenuContentProviderSettings extends ContentProviderSettings
 {
-    /** 
-     * @ORM\ManyToOne(targetEntity="Page") 
+    /**
+     * @ORM\ManyToOne(targetEntity="Page")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", nullable=false)
      */
     private $parent;
@@ -35,7 +35,7 @@ class MenuContentProviderSettings extends ContentProviderSettings
 
     public function setDirectChildren(Bool $directChildren)
     {
-        $this->directChildren = $directChildren;
+        $this->directChildren=$directChildren;
 
         return $this;
     }
