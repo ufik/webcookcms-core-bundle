@@ -26,6 +26,7 @@ class AppKernel extends Kernel
             // Webcookcms bundles, loaded via `bundles.php`
             new Webcook\Cms\SecurityBundle\WebcookCmsSecurityBundle(),
             new Webcook\Cms\CoreBundle\WebcookCmsCoreBundle(),
+            new Webcook\Cms\I18nBundle\WebcookCmsI18nBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

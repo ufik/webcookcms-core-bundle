@@ -8,8 +8,6 @@ class MenuContentProviderTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCas
 {
     public function testMenuContentProviderContent()
     {
-        $this->loadData();
-
         $page = $this->em->getRepository('Webcook\Cms\CoreBundle\Entity\Page')->find(1);
         $section = $page->getSections()[0]->getSection();
 
@@ -18,15 +16,5 @@ class MenuContentProviderTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCas
         
         $this->assertContains('/en/home', $content);
         $this->assertContains('/en/contact', $content);
-    }
-
-    private function loadData()
-    {
-        $this->loadFixtures(array(
-            'Webcook\Cms\CoreBundle\DataFixtures\ORM\LoadContentProviderData',
-            'Webcook\Cms\CoreBundle\DataFixtures\ORM\LoadSectionData',
-            'Webcook\Cms\CoreBundle\DataFixtures\ORM\LoadLanguageData',
-            'Webcook\Cms\CoreBundle\DataFixtures\ORM\LoadPageData'
-        ));
     }
 }

@@ -3,7 +3,7 @@
 /**
  * This file is part of Webcook security bundle.
  *
- * See LICENSE file in the root of the bundle. Webcook 
+ * See LICENSE file in the root of the bundle. Webcook
  */
 
 namespace Webcook\Cms\CoreBundle\Form\Type;
@@ -47,7 +47,7 @@ class PageType extends AbstractType
                 'class' => 'WebcookCmsCoreBundle:Page'
             ))
             ->add('language', EntityType::class, array(
-                'class' => 'WebcookCmsCoreBundle:Language'
+                'class' => 'WebcookCmsI18nBundle:Language'
             ))
             ->add('sections', CollectionType::class, array(
                 'entry_type' => PageSectionType::class,

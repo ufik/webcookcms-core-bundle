@@ -45,10 +45,10 @@ class MenuContentProviderSettingsControllerTest extends \Webcook\Cms\CoreBundle\
 
         $settings = $this->em->getRepository('Webcook\Cms\CoreBundle\Entity\MenuContentProviderSettings')->findAll();
 
-        $this->assertCount(4, $settings);
-        $this->assertEquals('Main', $settings[3]->getPage()->getTitle());
-        $this->assertEquals('Menu', $settings[3]->getSection()->getName());
-        $this->assertEquals('Main', $settings[3]->getParent()->getTitle());
+        $this->assertCount(2, $settings);
+        $this->assertEquals('Main', $settings[2]->getPage()->getTitle());
+        $this->assertEquals('Menu', $settings[2]->getSection()->getName());
+        $this->assertEquals('Main', $settings[2]->getParent()->getTitle());
     }
 
     public function testPut()
@@ -87,7 +87,7 @@ class MenuContentProviderSettingsControllerTest extends \Webcook\Cms\CoreBundle\
 
         $Languages = $this->em->getRepository('Webcook\Cms\CoreBundle\Entity\MenuContentProviderSettings')->findAll();
 
-        $this->assertCount(2, $Languages);
+        $this->assertCount(1, $Languages);
     }
 
     public function testWrongPost()

@@ -26,7 +26,7 @@ abstract class BasicTestCase extends WebTestCase
         $classNames[] = 'Webcook\Cms\SecurityBundle\DataFixtures\ORM\LoadUserData';
         $classNames[] = 'Webcook\Cms\CoreBundle\DataFixtures\ORM\LoadContentProviderData';
         $classNames[] = 'Webcook\Cms\CoreBundle\DataFixtures\ORM\LoadSectionData';
-        $classNames[] = 'Webcook\Cms\CoreBundle\DataFixtures\ORM\LoadLanguageData';
+        $classNames[] = 'Webcook\Cms\I18nBundle\DataFixtures\ORM\LoadLanguageData';
         $classNames[] = 'Webcook\Cms\CoreBundle\DataFixtures\ORM\LoadPageData';
 
         parent::loadFixtures($classNames, $omName, $registryName, $purgeMode);

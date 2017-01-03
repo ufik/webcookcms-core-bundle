@@ -3,7 +3,7 @@
 /**
  * This file is part of Webcook common bundle.
  *
- * See LICENSE file in the root of the bundle. Webcook 
+ * See LICENSE file in the root of the bundle. Webcook
  */
 
 namespace Webcook\Cms\CoreBundle\DataFixtures\ORM;
@@ -13,7 +13,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Webcook\Cms\CoreBundle\Entity\Page;
 use Webcook\Cms\CoreBundle\Entity\PageSection;
-use Webcook\Cms\CoreBundle\Entity\Language;
+use Webcook\Cms\I18nBundle\Entity\Language;
 use Webcook\Cms\CoreBundle\Entity\Section;
 use Webcook\Cms\CoreBundle\Entity\ContentProvider;
 use Webcook\Cms\CoreBundle\Entity\MenuContentProviderSettings;
@@ -54,7 +54,7 @@ class LoadPageData implements FixtureInterface, ContainerAwareInterface, Ordered
     {
         $this->manager = $manager;
 
-        $languages = $this->manager->getRepository('Webcook\Cms\CoreBundle\Entity\Language')->findAll();
+        $languages = $this->manager->getRepository('Webcook\Cms\I18nBundle\Entity\Language')->findAll();
         $sections = $this->manager->getRepository('Webcook\Cms\CoreBundle\Entity\Section')->findAll();
         $contentProviders = $this->manager->getRepository('Webcook\Cms\CoreBundle\Entity\ContentProvider')->findAll();
 
@@ -102,7 +102,7 @@ class LoadPageData implements FixtureInterface, ContainerAwareInterface, Ordered
         
         $page->setTitle($title);
         $page->setLanguage($language);
-        $page->setLayout('default');   
+        $page->setLayout('default');
         $page->setParent($parent);
         
         $this->manager->persist($page);

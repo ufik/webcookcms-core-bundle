@@ -14,7 +14,7 @@ use Webcook\Cms\CoreBundle\Base\BasicEntity;
  * @ORM\HasLifecycleCallbacks
  * TODO: redirects, SEO features, inheritance from parents
  */
-class Page Extends BasicEntity
+class Page extends BasicEntity
 {
     /**
      * @ORM\Column(length=64)
@@ -72,7 +72,7 @@ class Page Extends BasicEntity
     private $children;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Language")
+     * @ORM\ManyToOne(targetEntity="Webcook\Cms\I18nBundle\Entity\Language")
      */
     private $language;
 
@@ -99,7 +99,7 @@ class Page Extends BasicEntity
     /** @ORM\PrePersist */
     public function setLanguageAbbr()
     {
-        $this->languageAbbr = $this->language->getAbbr();
+        $this->languageAbbr = $this->language->getLocale();
     }
 
     public function getId()
@@ -177,12 +177,12 @@ class Page Extends BasicEntity
 
     public function getRouteName()
     {
-        return $this->getLanguage()->getAbbr().'_'.str_replace('/', '_', $this->slug);
+        return $this->getLanguage()->getLocale().'_'.str_replace('/', '_', $this->slug);
     }
 
     public function getPath()
     {
-        $path = (!$this->getLanguage()->isDefault() ? $this->getLanguage()->getAbbr() : '') . $this->getSlug();
+        $path = (!$this->getLanguage()->isDefault() ? $this->getLanguage()->getLocale() : '') . $this->getSlug();
 
         return str_replace($this->getRoot()->getSlug(), '', $path);
     }

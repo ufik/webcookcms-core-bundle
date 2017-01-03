@@ -38,10 +38,7 @@ class FrontendPageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTest
     private function loadData()
     {
         $this->loadFixtures(array(
-            'Webcook\Cms\CoreBundle\DataFixtures\ORM\LoadContentProviderData',
-            'Webcook\Cms\CoreBundle\DataFixtures\ORM\LoadSectionData',
-            'Webcook\Cms\CoreBundle\DataFixtures\ORM\LoadLanguageData',
-            'Webcook\Cms\CoreBundle\DataFixtures\ORM\LoadPageData'
+            'Webcook\Cms\CoreBundle\DataFixtures\ORM\LoadContentProviderData'
         ));
     }
 }
