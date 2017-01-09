@@ -37,6 +37,9 @@ class PageType extends AbstractType
                 ),
                 'label' => 'common.pages.form.name',
             ))
+            ->add('h1', TextType::class, array())
+            ->add('description', TextType::class, array())
+            ->add('keywords', TextType::class, array())
             ->add('layout', TextType::class, array(
                 'constraints' => array(
                     new NotBlank(array('message' => 'common.pages.form.layout.required')),

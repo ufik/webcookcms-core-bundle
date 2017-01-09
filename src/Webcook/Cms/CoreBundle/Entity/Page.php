@@ -22,6 +22,21 @@ class Page extends BasicEntity
     private $title;
 
     /**
+     * @ORM\Column(length=64, nullable=true)
+     */
+    private $h1;
+
+    /**
+     * @ORM\Column(length=64, nullable=true)
+     */
+    private $keywords;
+
+    /**
+     * @ORM\Column(length=64, nullable=true)
+     */
+    private $description;
+
+    /**
      * @Gedmo\Slug(handlers={
      *      @Gedmo\SlugHandler(class="Gedmo\Sluggable\Handler\TreeSlugHandler", options={
      *          @Gedmo\SlugHandlerOption(name="parentRelationField", value="parent"),
@@ -190,5 +205,81 @@ class Page extends BasicEntity
     public function getLvl()
     {
         return $this->lvl;
+    }
+
+    /**
+     * Gets the value of h1.
+     *
+     * @return mixed
+     */
+    public function getH1()
+    {
+        if (empty($this->h1)) {
+            return $this->title;
+        }
+
+        return $this->h1;
+    }
+
+    /**
+     * Sets the value of h1.
+     *
+     * @param mixed $h1 the h1
+     *
+     * @return self
+     */
+    public function setH1($h1)
+    {
+        $this->h1 = $h1;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of keywords.
+     *
+     * @return mixed
+     */
+    public function getKeywords()
+    {
+        return $this->keywords;
+    }
+
+    /**
+     * Sets the value of keywords.
+     *
+     * @param mixed $keywords the keywords
+     *
+     * @return self
+     */
+    public function setKeywords($keywords)
+    {
+        $this->keywords = $keywords;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of description.
+     *
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Sets the value of description.
+     *
+     * @param mixed $description the description
+     *
+     * @return self
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
     }
 }

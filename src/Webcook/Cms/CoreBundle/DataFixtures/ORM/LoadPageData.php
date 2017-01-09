@@ -57,10 +57,9 @@ class LoadPageData implements FixtureInterface, ContainerAwareInterface, Ordered
         // TODO: refactor
         $languages = $this->manager->getRepository('Webcook\Cms\I18nBundle\Entity\Language')->findAll();
         $sections = $this->manager->getRepository('Webcook\Cms\CoreBundle\Entity\Section')->findAll();
-        $contentProviders = $this->manager->getRepository('Webcook\Cms\CoreBundle\Entity\ContentProvider')->findAll();
 
         // english main menu
-        $mainen = $this->addPage('Main', $languages[1]);
+        $mainen = $this->addPage('Main', $languages[1], null, 'This is h1', 'description', 'key, words');
         $home = $this->addPage('Home', $languages[1], $mainen);
         $this->addPage('Photogallery', $languages[1], $home);
         $this->addPage('Contact', $languages[1], $mainen);
@@ -77,7 +76,7 @@ class LoadPageData implements FixtureInterface, ContainerAwareInterface, Ordered
 
         // Czech main menu
         $main = $this->addPage('Main', $languages[0]);
-        $this->addPage('Uvod', $languages[0], $main);
+        $this->addPage('Uvod', $languages[0], $main, 'Uvodni nadpis', 'popisek stranky', 'klicova, slova');
 
         $settings = new MenuContentProviderSettings();
         $settings->setPage($main)
@@ -97,13 +96,16 @@ class LoadPageData implements FixtureInterface, ContainerAwareInterface, Ordered
         $this->manager->flush();
     }
 
-    private function addPage(String $title, Language $language, $parent = null)
+    private function addPage(String $title, Language $language, $parent = null, $h1 = null, $description = null, $keywords = null)
     {
         $page = new Page();
         
         $page->setTitle($title);
         $page->setLanguage($language);
         $page->setLayout('default');
+        $page->setH1($h1);
+        $page->setDescription($description);
+        $page->setKeywords($keywords);
         $page->setParent($parent);
         
         $this->manager->persist($page);

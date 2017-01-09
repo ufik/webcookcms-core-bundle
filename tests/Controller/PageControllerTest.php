@@ -26,6 +26,9 @@ class PageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
         $this->assertEquals(1, $data['id']);
         $this->assertEquals(1, $data['version']);
         $this->assertEquals('Main', $data['title']);
+        $this->assertEquals('This is h1', $data['h1']);
+        $this->assertEquals('description', $data['description']);
+        $this->assertEquals('key, words', $data['keywords']);
         $this->assertEquals('default', $data['layout']);
         $this->assertCount(1, $data['sections']);
     }
@@ -41,7 +44,10 @@ class PageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
                 'page' => array(
                     'title' => 'New menu',
                     'layout' => 'default',
-                    'language' => 1
+                    'language' => 1,
+                    'h1' => 'h1 title',
+                    'description' => 'desc',
+                    'keywords' => 'key, words'
                 ),
             )
         );
@@ -52,6 +58,9 @@ class PageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
 
         $this->assertCount(8, $pages);
         $this->assertEquals('New menu', $pages[7]->getTitle());
+        $this->assertEquals('h1 title', $pages[7]->getH1());
+        $this->assertEquals('desc', $pages[7]->getDescription());
+        $this->assertEquals('key, words', $pages[7]->getKeywords());
     }
 
     public function testPut()
@@ -66,7 +75,10 @@ class PageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
                 'page' => array(
                     'title' => 'Updated menu',
                     'layout' => 'default',
-                    'language' => 1
+                    'language' => 1,
+                    'h1' => 'Updated h1',
+                    'description' => 'Updated description',
+                    'keywords' => 'Updated keywords'
                 ),
             )
         );
@@ -76,6 +88,9 @@ class PageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
         $page = $this->em->getRepository('Webcook\Cms\CoreBundle\Entity\Page')->find(2);
 
         $this->assertEquals('Updated menu', $page->getTitle());
+        $this->assertEquals('Updated h1', $page->getH1());
+        $this->assertEquals('Updated description', $page->getDescription());
+        $this->assertEquals('Updated keywords', $page->getKeywords());
     }
 
     public function testPutPageSectionOrder()
@@ -140,7 +155,10 @@ class PageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
                 'page' => array(
                     'title' => 'New menu',
                     'layout' => 'default',
-                    'language' => 1
+                    'language' => 1,
+                    'h1' => 'Updated h1',
+                    'description' => 'Updated description',
+                    'keywords' => 'Updated keywords'
                 ),
             )
         );
@@ -151,6 +169,9 @@ class PageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
 
         $this->assertCount(8, $pages);
         $this->assertEquals('New menu', $pages[7]->getTitle());
+        $this->assertEquals('Updated h1', $pages[7]->getH1());
+        $this->assertEquals('Updated description', $pages[7]->getDescription());
+        $this->assertEquals('Updated keywords', $pages[7]->getKeywords());
     }
 
     public function testWrongPut()

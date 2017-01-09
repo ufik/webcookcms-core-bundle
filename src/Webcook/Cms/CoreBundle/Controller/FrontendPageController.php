@@ -42,7 +42,8 @@ class FrontendPageController extends Controller
         }
 
         return $this->render('WebcookCmsCoreBundle::'.$page->getLayout().'.layout.html.twig', array(
-            'sections' => $sections
+            'sections' => $sections,
+            'page'     => $page
         ));
     }
 }
