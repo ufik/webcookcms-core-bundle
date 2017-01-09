@@ -14,6 +14,7 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Webcook\Cms\CoreBundle\Entity\ContentProvider;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Webcook\Cms\CoreBundle\Entity\MenuContentProviderSettings;
 
 /**
  * ContentProvider fixtures for tests.
@@ -49,7 +50,7 @@ class LoadContentProviderData implements FixtureInterface, ContainerAwareInterfa
     {
         $this->manager = $manager;
 
-        $this->addContentProvider('webcookcms.core.menu_content_provider');
+        $this->addContentProvider(MenuContentProviderSettings::TAG);
         
         $this->manager->flush();
     }

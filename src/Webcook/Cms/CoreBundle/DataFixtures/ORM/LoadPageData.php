@@ -54,15 +54,16 @@ class LoadPageData implements FixtureInterface, ContainerAwareInterface, Ordered
     {
         $this->manager = $manager;
 
+        // TODO: refactor
         $languages = $this->manager->getRepository('Webcook\Cms\I18nBundle\Entity\Language')->findAll();
         $sections = $this->manager->getRepository('Webcook\Cms\CoreBundle\Entity\Section')->findAll();
         $contentProviders = $this->manager->getRepository('Webcook\Cms\CoreBundle\Entity\ContentProvider')->findAll();
 
         // english main menu
-        $mainen = $this->addPage('Main', $languages[1], $sections[0], $contentProviders[0]);
-        $home = $this->addPage('Home', $languages[1], null, null, $mainen);
-        $this->addPage('Photogallery', $languages[1], null, null, $home);
-        $this->addPage('Contact', $languages[1], null, null, $mainen);
+        $mainen = $this->addPage('Main', $languages[1]);
+        $home = $this->addPage('Home', $languages[1], $mainen);
+        $this->addPage('Photogallery', $languages[1], $home);
+        $this->addPage('Contact', $languages[1], $mainen);
 
         $settings = new MenuContentProviderSettings();
         $settings->setPage($mainen)
@@ -72,11 +73,11 @@ class LoadPageData implements FixtureInterface, ContainerAwareInterface, Ordered
         $this->manager->persist($settings);
 
         // footer menu
-        $this->addPage('Footer', $languages[1], $sections[0], $contentProviders[0], null);
+        $this->addPage('Footer', $languages[1]);
 
         // Czech main menu
-        $main = $this->addPage('Main', $languages[0], $sections[0], $contentProviders[0]);
-        $this->addPage('Uvod', $languages[0], null, null, $main);
+        $main = $this->addPage('Main', $languages[0]);
+        $this->addPage('Uvod', $languages[0], $main);
 
         $settings = new MenuContentProviderSettings();
         $settings->setPage($main)
@@ -85,20 +86,19 @@ class LoadPageData implements FixtureInterface, ContainerAwareInterface, Ordered
 
         $this->manager->persist($settings);
 
+        $settings = new MenuContentProviderSettings();
+        $settings->setPage($main)
+            ->setSection($sections[1])
+            ->setParent($mainen);
+
+        $this->manager->persist($settings);
+
         $this->manager->flush();
     }
 
-    private function addPage(String $title, Language $language, Section $section = null, ContentProvider $contentProvider = null, $parent = null)
+    private function addPage(String $title, Language $language, $parent = null)
     {
         $page = new Page();
-        if ($section) {
-            $pageSection = new PageSection();
-            $pageSection->setPage($page);
-            $pageSection->setSection($section);
-            $pageSection->setContentProvider($contentProvider);
-
-            $this->manager->persist($pageSection);
-        }
         
         $page->setTitle($title);
         $page->setLanguage($language);

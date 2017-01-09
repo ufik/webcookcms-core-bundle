@@ -7,9 +7,11 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        {% if sections.Menu is defined %} {{ sections.Menu | raw }} {% endif %} 
-        {% if sections.Content is defined %} {{ sections.Content | raw }} {% endif %}
-        {% if sections.Footer is defined %} {{ sections.Footer | raw }} {% endif %}
+        {% trans %}common.test.translation{% endtrans %}
+
+        {{ include('@WebcookCmsCore/render_section.html.twig', {section: 'Menu', sections: sections}) }}
+        {{ include('@WebcookCmsCore/render_section.html.twig', {section: 'Content', sections: sections}) }}
+        {{ include('@WebcookCmsCore/render_section.html.twig', {section: 'Footer', sections: sections}) }}
 
         {% block javascripts %}{% endblock %}
     </body>

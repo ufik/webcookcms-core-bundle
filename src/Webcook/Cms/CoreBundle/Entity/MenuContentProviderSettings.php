@@ -12,6 +12,8 @@ use Webcook\Cms\CoreBundle\Base\BasicEntity;
  */
 class MenuContentProviderSettings extends ContentProviderSettings
 {
+    const TAG = 'webcookcms.core.menu_content_provider';
+
     /**
      * @ORM\ManyToOne(targetEntity="Page")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", nullable=false)

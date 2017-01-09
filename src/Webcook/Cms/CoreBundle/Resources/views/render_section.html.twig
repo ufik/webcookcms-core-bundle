@@ -1,0 +1,5 @@
+{% if sections[section] is defined %} 
+	{% for section in sections[section] %}
+		{{ section | raw }}
+	{% endfor %}
+{% endif %}

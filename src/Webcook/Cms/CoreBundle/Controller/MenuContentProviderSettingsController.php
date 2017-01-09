@@ -3,12 +3,12 @@
 /**
  * This file is part of Webcook common bundle.
  *
- * See LICENSE file in the root of the bundle. Webcook 
+ * See LICENSE file in the root of the bundle. Webcook
  */
 
 namespace Webcook\Cms\CoreBundle\Controller;
 
-use Webcook\Cms\CoreBundle\Base\BaseRestController;;
+use Webcook\Cms\CoreBundle\Base\BaseRestController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Webcook\Cms\CoreBundle\Entity\MenuContentProviderSettings;
 use Webcook\Cms\CoreBundle\Form\Type\MenuContentProviderSettingsType;

@@ -32,6 +32,7 @@ class WebcookCmsPageRouteLoader extends Loader
         foreach ($pages as $page) {
             $route = new Route($page->getPath(), array(
                 '_controller' => 'WebcookCmsCoreBundle:FrontendPage:render',
+                '_locale'     => $page->getLanguage()->getLocale(),
                 'page'        => $page->getId()
             ), array());
 

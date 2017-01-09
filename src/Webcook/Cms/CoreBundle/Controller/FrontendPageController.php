@@ -24,7 +24,7 @@ class FrontendPageController extends Controller
             $section = $pageSection->getSection();
 
             $contentProvider               = $this->get($pageSection->getContentProvider()->getName());
-            $sections[$section->getName()] = $contentProvider->getContent($page, $section);
+            $sections[$section->getName()][] = $contentProvider->getContent($page, $section);
         }
 
         return $this->render('WebcookCmsCoreBundle::'.$page->getLayout().'.layout.html.twig', array(
