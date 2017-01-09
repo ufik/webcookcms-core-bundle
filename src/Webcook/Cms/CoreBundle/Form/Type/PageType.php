@@ -49,10 +49,6 @@ class PageType extends AbstractType
             ->add('language', EntityType::class, array(
                 'class' => 'WebcookCmsI18nBundle:Language'
             ))
-            ->add('sections', CollectionType::class, array(
-                'entry_type' => PageSectionType::class,
-                'allow_add' => true
-            ))
             ->add('version', HiddenType::class, array('mapped' => false));
     }
 

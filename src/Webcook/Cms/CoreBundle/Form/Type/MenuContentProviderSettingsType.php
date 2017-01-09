@@ -3,7 +3,7 @@
 /**
  * This file is part of Webcook security bundle.
  *
- * See LICENSE file in the root of the bundle. Webcook 
+ * See LICENSE file in the root of the bundle. Webcook
  */
 
 namespace Webcook\Cms\CoreBundle\Form\Type;
@@ -12,7 +12,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -40,6 +40,7 @@ class MenuContentProviderSettingsType extends AbstractType
             ->add('section', EntityType::class, array(
                 'class' => 'WebcookCmsCoreBundle:Section'
             ))
+            ->add('order', IntegerType::class, array('mapped' => false))
             ->add('version', HiddenType::class, array('mapped' => false));
     }
 

@@ -39,6 +39,11 @@ class PageSection
     private $contentProvider;
 
     /**
+     * @ORM\Column(name="content_order", type="integer")
+     */
+    private $order;
+
+    /**
      * Gets the value of id.
      *
      * @return mixed
@@ -48,11 +53,47 @@ class PageSection
         return $this->id;
     }
 
+    /**
+     * Gets the value of order.
+     *
+     * @return mixed
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
+
+    /**
+     * Sets the value of order.
+     *
+     * @param mixed $order the order
+     *
+     * @return self
+     */
+    public function setOrder($order)
+    {
+        $this->order = $order;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of page.
+     *
+     * @return mixed
+     */
     public function getPage()
     {
         return $this->page;
     }
 
+    /**
+     * Sets the value of page.
+     *
+     * @param mixed $page the page
+     *
+     * @return self
+     */
     public function setPage($page)
     {
         $this->page = $page;
@@ -60,6 +101,23 @@ class PageSection
         return $this;
     }
 
+    /**
+     * Gets the value of section.
+     *
+     * @return mixed
+     */
+    public function getSection()
+    {
+        return $this->section;
+    }
+
+    /**
+     * Sets the value of section.
+     *
+     * @param mixed $section the section
+     *
+     * @return self
+     */
     public function setSection($section)
     {
         $this->section = $section;
@@ -67,20 +125,27 @@ class PageSection
         return $this;
     }
 
-    public function getSection()
+    /**
+     * Gets the value of contentProvider.
+     *
+     * @return mixed
+     */
+    public function getContentProvider()
     {
-        return $this->section;
+        return $this->contentProvider;
     }
 
+    /**
+     * Sets the value of contentProvider.
+     *
+     * @param mixed $contentProvider the content provider
+     *
+     * @return self
+     */
     public function setContentProvider($contentProvider)
     {
         $this->contentProvider = $contentProvider;
 
         return $this;
-    }
-
-    public function getContentProvider()
-    {
-        return $this->contentProvider;
     }
 }

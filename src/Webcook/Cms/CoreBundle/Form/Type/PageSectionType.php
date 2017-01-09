@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This file is part of Webcook security bundle.
+ * This file is part of Webcook core bundle.
  *
- * See LICENSE file in the root of the bundle. Webcook 
+ * See LICENSE file in the root of the bundle. Webcook
  */
 
 namespace Webcook\Cms\CoreBundle\Form\Type;
@@ -12,7 +12,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 /**
  * Page form type.
@@ -28,20 +28,7 @@ class PageSectionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('section', EntityType::class, array(
-                'class' => 'WebcookCmsCoreBundle:Section',
-                'constraints' => array(
-                    new NotBlank(array('message' => 'common.pages.form.section.required')),
-                ),
-                'label' => 'common.pages.form.section',
-            ))
-            ->add('contentProvider', EntityType::class, array(
-                'class' => 'WebcookCmsCoreBundle:ContentProvider',
-                'constraints' => array(
-                    new NotBlank(array('message' => 'common.contentProvider.form.layout.required')),
-                ),
-                'label' => 'common.pages.form.contentProvider',
-            ));
+            ->add('order', IntegerType::class, array());
     }
 
     /**
@@ -52,7 +39,6 @@ class PageSectionType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => \Webcook\Cms\CoreBundle\Entity\PageSection::class,
             'csrf_protection'   => false,
         ));
     }

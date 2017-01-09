@@ -29,6 +29,11 @@ abstract class ContentProviderSettings extends BasicEntity
     private $section;
 
     /**
+     * Holder for order, will pass it to PageSection.
+     */
+    private $order = 0;
+
+    /**
      * @ORM\PrePersist
      */
     public function savePageSection(LifecycleEventArgs $eventArgs)
@@ -39,22 +44,11 @@ abstract class ContentProviderSettings extends BasicEntity
         $pageSection = new PageSection();
         $pageSection->setPage($this->page);
         $pageSection->setSection($this->section);
+        $pageSection->setOrder($this->order);
         $pageSection->setContentProvider($contentProvider);
 
         $em->persist($pageSection);
     }
-
-    /**
-     * @ORM\PreUpdate
-     */
-    /*public function updatePageSection(LifecycleEventArgs $eventArgs)
-    {
-        $em     = $eventArgs->getEntityManager();
-        $entity = $eventArgs->getEntity();
-
-        $entity->setPage($this->page);
-        $entity->setSection($this->section);
-    }*/
 
     public function getPage()
     {
@@ -78,5 +72,29 @@ abstract class ContentProviderSettings extends BasicEntity
     public function getSection()
     {
         return $this->section;
+    }
+
+    /**
+     * Gets the value of order.
+     *
+     * @return mixed
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
+
+    /**
+     * Sets the value of order.
+     *
+     * @param mixed $order the order
+     *
+     * @return self
+     */
+    public function setOrder($order)
+    {
+        $this->order = $order;
+
+        return $this;
     }
 }

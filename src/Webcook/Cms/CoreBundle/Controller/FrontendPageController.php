@@ -23,8 +23,22 @@ class FrontendPageController extends Controller
         foreach ($pageSections as $pageSection) {
             $section = $pageSection->getSection();
 
-            $contentProvider               = $this->get($pageSection->getContentProvider()->getName());
-            $sections[$section->getName()][] = $contentProvider->getContent($page, $section);
+            $contentProvider                 = $this->get($pageSection->getContentProvider()->getName());
+            $order = $pageSection->getOrder();
+
+            if (!array_key_exists($section->getName(), $sections)) {
+                $sections[$section->getName()] = array();
+            }
+
+            while (array_key_exists($order, $sections[$section->getName()])) {
+                $order++;
+            }
+
+            $sections[$section->getName()][$order] = $contentProvider->getContent($page, $section);
+        }
+
+        foreach ($sections as &$section) {
+            ksort($section);
         }
 
         return $this->render('WebcookCmsCoreBundle::'.$page->getLayout().'.layout.html.twig', array(

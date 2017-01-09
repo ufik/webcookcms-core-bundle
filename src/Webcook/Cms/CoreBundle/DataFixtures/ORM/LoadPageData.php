@@ -82,6 +82,7 @@ class LoadPageData implements FixtureInterface, ContainerAwareInterface, Ordered
         $settings = new MenuContentProviderSettings();
         $settings->setPage($main)
             ->setSection($sections[0])
+            ->setOrder(1)
             ->setParent($main);
 
         $this->manager->persist($settings);
