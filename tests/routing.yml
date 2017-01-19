@@ -5,7 +5,3 @@ webcook_cms_common:
 webcook_cms_test:
     resource: "@WebcookCmsCoreBundle/Tests/Helpers/Controller/TestController.php"
     type: rest
-api_platform:
-    resource: '.'
-    type:     'api_platform'
-    prefix:   '/tapi' # Optional

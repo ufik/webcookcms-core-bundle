@@ -7,7 +7,7 @@ class PageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
     public function testGetPages()
     {
         $this->createTestClient();
-        $this->client->request('GET', '/tapi/pages.json');
+        $this->client->request('GET', '/api/pages.json');
 
         $pages = $this->client->getResponse()->getContent();
 
@@ -18,7 +18,7 @@ class PageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
     public function testGetPage()
     {
         $this->createTestClient();
-        $this->client->request('GET', '/tapi/pages/1.json');
+        $this->client->request('GET', '/api/pages/1.json');
         $page = $this->client->getResponse()->getContent();
 
         $data = json_decode($page, true);
@@ -39,7 +39,7 @@ class PageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
 
         $crawler = $this->client->request(
             'POST',
-            '/tapi/pages.json',
+            '/api/pages.json',
             array(),
             array(),
             array(
@@ -48,7 +48,7 @@ class PageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
             json_encode(array(
                 'title' => 'New menu',
                 'layout' => 'default',
-                'language' => '/tapi/languages/1.json',
+                'language' => '/api/languages/1',
                 'h1' => 'h1 title',
                 'description' => 'desc',
                 'keywords' => 'key, words'
@@ -70,10 +70,10 @@ class PageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
     {
         $this->createTestClient();
 
-        $this->client->request('GET', '/tapi/pages/2.json'); // save version into session
+        $this->client->request('GET', '/api/pages/2.json'); // save version into session
         $crawler = $this->client->request(
             'PUT',
-            '/tapi/pages/2.json',
+            '/api/pages/2.json',
             array(),
             array(),
             array(
@@ -83,7 +83,7 @@ class PageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
                 array(
                     'title' => 'Updated menu',
                     'layout' => 'default',
-                    'language' => '/tapi/languages/1',
+                    'language' => '/api/languages/1',
                     'h1' => 'Updated h1',
                     'description' => 'Updated description',
                     'keywords' => 'Updated keywords'
@@ -101,32 +101,11 @@ class PageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
         $this->assertEquals('Updated keywords', $page->getKeywords());
     }
 
-    public function testPutPageSectionOrder()
-    {
-        $this->createTestClient();
-
-        $crawler = $this->client->request(
-            'PUT',
-            '/tapi/page-section/order/1',
-            array(
-                'pageSection' => array(
-                    'order' => 4
-                ),
-            )
-        );
-
-        $this->assertTrue($this->client->getResponse()->isSuccessful());
-
-        $page = $this->em->getRepository('Webcook\Cms\CoreBundle\Entity\PageSection')->find(1);
-
-        $this->assertEquals(4, $page->getOrder());
-    }
-
     public function testDelete()
     {
         $this->createTestClient();
 
-        $crawler = $this->client->request('DELETE', '/tapi/pages/2.json');
+        $crawler = $this->client->request('DELETE', '/api/pages/2.json');
 
         $this->assertTrue($this->client->getResponse()->isSuccessful());
 
@@ -141,7 +120,7 @@ class PageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
 
         $crawler = $this->client->request(
             'POST',
-            '/tapi/pages.json',
+            '/api/pages.json',
             array(),
             array(),
             array(
@@ -161,7 +140,7 @@ class PageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
 
         $crawler = $this->client->request(
             'PUT',
-            '/tapi/pages/8.json',
+            '/api/pages/8.json',
             array(),
             array(),
             array(
@@ -178,6 +157,7 @@ class PageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
         );
 
         $this->assertFalse($this->client->getResponse()->isSuccessful());
+        $this->assertEquals(404, $this->client->getResponse()->getStatusCode());
     }
 
     public function testWrongPut()
@@ -186,7 +166,7 @@ class PageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
 
         $crawler = $this->client->request(
             'PUT',
-            '/tapi/pages/2.json',
+            '/api/pages/2.json',
             array(),
             array(),
             array(
@@ -196,7 +176,28 @@ class PageControllerTest extends \Webcook\Cms\CoreBundle\Tests\BasicTestCase
                 'name' => 'Tester missing Page field',
             ))
         );
-var_dump($this->client->getResponse()->getContent());
+
         $this->assertEquals(400, $this->client->getResponse()->getStatusCode());
+    }
+
+    public function testPutPageSectionOrder()
+    {
+        $this->createTestClient();
+
+        $crawler = $this->client->request(
+            'PUT',
+            '/api/page-section/order/1',
+            array(
+                'pageSection' => array(
+                    'order' => 4
+                ),
+            )
+        );
+
+        $this->assertTrue($this->client->getResponse()->isSuccessful());
+
+        $page = $this->em->getRepository('Webcook\Cms\CoreBundle\Entity\PageSection')->find(1);
+
+        $this->assertEquals(4, $page->getOrder());
     }
 }

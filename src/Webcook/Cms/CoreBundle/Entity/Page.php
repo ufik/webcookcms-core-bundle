@@ -20,14 +20,15 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="Page")
  * @ORM\Entity(repositoryClass="Gedmo\Tree\Entity\Repository\NestedTreeRepository")
  * @ORM\HasLifecycleCallbacks
- * TODO: redirects, SEO features, inheritance from parents
+ *
+ * TODO: redirects, inheritance from parents
  */
 class Page extends BasicEntity
 {
     /**
      * @ORM\Column(length=64)
      * @Groups({"write"})
-     * @Assert\NotNull
+     * @Assert\NotBlank
      */
     private $title;
 
@@ -105,7 +106,7 @@ class Page extends BasicEntity
     /**
      * @ORM\ManyToOne(targetEntity="Webcook\Cms\I18nBundle\Entity\Language")
      * @Groups({"write"})
-     * @Assert\NotNull
+     * @Assert\NotBlank
      */
     private $language;
 
@@ -117,7 +118,7 @@ class Page extends BasicEntity
     /**
      * @ORM\Column(length=64)
      * @Groups({"write"})
-     * @Assert\NotNull
+     * @Assert\NotBlank
      */
     private $layout;
 
