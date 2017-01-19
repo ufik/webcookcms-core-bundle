@@ -6,9 +6,17 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Webcook\Cms\CoreBundle\Base\BasicEntity;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiProperty;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @Gedmo\Tree(type="nested")
+ * @ApiResource(attributes={
+ *     "denormalization_context"={"groups"={"write"}}
+ * })
  * @ORM\Table(name="Page")
  * @ORM\Entity(repositoryClass="Gedmo\Tree\Entity\Repository\NestedTreeRepository")
  * @ORM\HasLifecycleCallbacks
@@ -18,21 +26,26 @@ class Page extends BasicEntity
 {
     /**
      * @ORM\Column(length=64)
+     * @Groups({"write"})
+     * @Assert\NotNull
      */
     private $title;
 
     /**
      * @ORM\Column(length=64, nullable=true)
+     * @Groups({"write"})
      */
     private $h1;
 
     /**
      * @ORM\Column(length=64, nullable=true)
+     * @Groups({"write"})
      */
     private $keywords;
 
     /**
      * @ORM\Column(length=64, nullable=true)
+     * @Groups({"write"})
      */
     private $description;
 
@@ -70,6 +83,7 @@ class Page extends BasicEntity
      * @Gedmo\TreeRoot
      * @ORM\ManyToOne(targetEntity="Page")
      * @ORM\JoinColumn(referencedColumnName="id", onDelete="CASCADE")
+     * @MaxDepth(2)
      */
     private $root;
 
@@ -77,17 +91,21 @@ class Page extends BasicEntity
      * @Gedmo\TreeParent
      * @ORM\ManyToOne(targetEntity="Page", inversedBy="children")
      * @ORM\JoinColumn(referencedColumnName="id", onDelete="CASCADE")
+     * @MaxDepth(2)
      */
     private $parent;
 
     /**
      * @ORM\OneToMany(targetEntity="Page", mappedBy="parent")
      * @ORM\OrderBy({"lft" = "ASC"})
+     * @MaxDepth(2)
      */
     private $children;
 
     /**
      * @ORM\ManyToOne(targetEntity="Webcook\Cms\I18nBundle\Entity\Language")
+     * @Groups({"write"})
+     * @Assert\NotNull
      */
     private $language;
 
@@ -98,11 +116,15 @@ class Page extends BasicEntity
 
     /**
      * @ORM\Column(length=64)
+     * @Groups({"write"})
+     * @Assert\NotNull
      */
     private $layout;
 
     /**
      * @ORM\OneToMany(targetEntity="PageSection", mappedBy="page", cascade={"persist"}, fetch="EAGER")
+     * @MaxDepth(5)
+     * @ApiProperty(readable = false)
      */
     private $sections;
 

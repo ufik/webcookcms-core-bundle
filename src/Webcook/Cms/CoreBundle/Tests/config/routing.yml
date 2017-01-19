@@ -11,3 +11,8 @@ login_check:
     path: /login_check
     options:
         i18n: false
+
+api_platform:
+    resource: '.'
+    type:     'api_platform'
+    prefix:   '/tapi' # Optional

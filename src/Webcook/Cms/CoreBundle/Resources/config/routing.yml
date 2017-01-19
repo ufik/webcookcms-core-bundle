@@ -11,3 +11,8 @@ webcook_cms_core_menu_content_provider_settings:
 webcook_cms_core_frontend_page:
     resource: "."
     type: webcookcms_page
+
+api_platform:
+    resource: '.'
+    type:     'api_platform'
+    prefix:   '/api' # Optional

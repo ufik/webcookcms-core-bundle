@@ -3,6 +3,8 @@
 namespace Webcook\Cms\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
+use ApiPlatform\Core\Annotation\ApiProperty;
 
 /**
  * Page section entity.
@@ -22,6 +24,8 @@ class PageSection
     /**
      * @ORM\ManyToOne(targetEntity="Page", inversedBy="sections")
      * @ORM\JoinColumn(name="page_id", referencedColumnName="id")
+     * @MaxDepth(5)
+     * @ApiProperty(readable = false)
      */
     private $page;
 
@@ -29,12 +33,16 @@ class PageSection
      *
      * @ORM\ManyToOne(targetEntity="Section")
      * @ORM\JoinColumn(name="section_id", referencedColumnName="id")
+     * @MaxDepth(2)
+     * @ApiProperty(readable = false)
      */
     private $section;
 
     /**
      * @ORM\ManyToOne(targetEntity="ContentProvider")
      * @ORM\JoinColumn(name="content_provider_id", referencedColumnName="id")
+     * @MaxDepth(2)
+     * @ApiProperty(readable = false)
      */
     private $contentProvider;
 

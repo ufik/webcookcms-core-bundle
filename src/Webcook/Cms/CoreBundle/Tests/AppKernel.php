@@ -18,10 +18,11 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             // Additional bundles
             new FOS\RestBundle\FOSRestBundle(),
-            new JMS\SerializerBundle\JMSSerializerBundle(),
+            //new JMS\SerializerBundle\JMSSerializerBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new \Tbbc\MoneyBundle\TbbcMoneyBundle(),
+            new ApiPlatform\Core\Bridge\Symfony\Bundle\ApiPlatformBundle(),
 
             // Webcookcms bundles, loaded via `bundles.php`
             new Webcook\Cms\SecurityBundle\WebcookCmsSecurityBundle(),

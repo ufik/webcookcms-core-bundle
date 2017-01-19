@@ -28,6 +28,7 @@
         "symfony/assetic-bundle": "^2.8",
         "liip/functional-test-bundle": "~1.0",
         "sensio/distribution-bundle": "^5.0",
+        "api-platform/core": "^2.0",
         "tbbc/money-bundle": "^3.1",
         "webcookcms/security-bundle": "~1.0@dev",
         "webcookcms/i18n-bundle": "~1.0@dev"

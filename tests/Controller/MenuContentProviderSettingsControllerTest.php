@@ -7,7 +7,7 @@ class MenuContentProviderSettingsControllerTest extends \Webcook\Cms\CoreBundle\
     public function testGetSettings()
     {
         $this->createTestClient();
-        $this->client->request('GET', '/api/content-providers/menu/settings/1/1');
+        $this->client->request('GET', '/tapi/content-providers/menu/settings/1/1');
 
         $settings = $this->client->getResponse()->getContent();
 
@@ -20,7 +20,7 @@ class MenuContentProviderSettingsControllerTest extends \Webcook\Cms\CoreBundle\
     public function testGetNonExistingSettings()
     {
         $this->createTestClient();
-        $this->client->request('GET', '/api/content-providers/menu/settings/1/2');
+        $this->client->request('GET', '/tapi/content-providers/menu/settings/1/2');
 
         $this->assertEquals(400, $this->client->getResponse()->getStatusCode());
     }
@@ -31,7 +31,7 @@ class MenuContentProviderSettingsControllerTest extends \Webcook\Cms\CoreBundle\
 
         $crawler = $this->client->request(
             'POST',
-            '/api/content-providers/menu/settings',
+            '/tapi/content-providers/menu/settings',
             array(
                 'menu_content_provider_settings' => array(
                     'page' => 1,
@@ -55,10 +55,10 @@ class MenuContentProviderSettingsControllerTest extends \Webcook\Cms\CoreBundle\
     {
         $this->createTestClient();
 
-        $this->client->request('GET', '/api/content-providers/menu/settings/2'); // save version into session
+        $this->client->request('GET', '/tapi/content-providers/menu/settings/2'); // save version into session
         $crawler = $this->client->request(
             'PUT',
-            '/api/content-providers/menu/settings/2',
+            '/tapi/content-providers/menu/settings/2',
             array(
                 'menu_content_provider_settings' => array(
                     'page' => 5,
@@ -81,7 +81,7 @@ class MenuContentProviderSettingsControllerTest extends \Webcook\Cms\CoreBundle\
     {
         $this->createTestClient();
 
-        $crawler = $this->client->request('DELETE', '/api/content-providers/menu/settings/2');
+        $crawler = $this->client->request('DELETE', '/tapi/content-providers/menu/settings/2');
 
         $this->assertTrue($this->client->getResponse()->isSuccessful());
 
@@ -96,7 +96,7 @@ class MenuContentProviderSettingsControllerTest extends \Webcook\Cms\CoreBundle\
 
         $crawler = $this->client->request(
             'POST',
-            '/api/content-providers/menu/settings',
+            '/tapi/content-providers/menu/settings',
             array(
                 'menu_content_provider_settings' => array(
                     'n' => 'Tester',
@@ -113,7 +113,7 @@ class MenuContentProviderSettingsControllerTest extends \Webcook\Cms\CoreBundle\
 
         $crawler = $this->client->request(
             'PUT',
-            '/api/content-providers/menu/settings/4',
+            '/tapi/content-providers/menu/settings/4',
             array(
                 'menu_content_provider_settings' => array(
                     'page' => 5,
@@ -138,7 +138,7 @@ class MenuContentProviderSettingsControllerTest extends \Webcook\Cms\CoreBundle\
 
         $crawler = $this->client->request(
             'PUT',
-            '/api/content-providers/menu/settings/1',
+            '/tapi/content-providers/menu/settings/1',
             array(
                 'menu_content_provider_settings' => array(
                     'name' => 'Test missing field',
