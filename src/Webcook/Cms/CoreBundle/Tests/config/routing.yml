@@ -15,4 +15,4 @@ login_check:
 api_platform:
     resource: '.'
     type:     'api_platform'
-    prefix:   '/tapi' # Optional
+    prefix:   '/api' # Optional
