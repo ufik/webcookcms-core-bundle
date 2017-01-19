@@ -23,6 +23,7 @@ class AppKernel extends Kernel
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new \Tbbc\MoneyBundle\TbbcMoneyBundle(),
             new ApiPlatform\Core\Bridge\Symfony\Bundle\ApiPlatformBundle(),
+            new Dunglas\ActionBundle\DunglasActionBundle(),
 
             // Webcookcms bundles, loaded via `bundles.php`
             new Webcook\Cms\SecurityBundle\WebcookCmsSecurityBundle(),
