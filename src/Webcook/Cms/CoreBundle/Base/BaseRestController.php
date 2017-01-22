@@ -109,21 +109,6 @@ class BaseRestController extends FOSRestController
     }
 
     /**
-     * @param [type] $permission [description]
-     *
-     * @return [type] [description]
-     */
-    protected function checkPermission($permission)
-    {
-        $controller = $this->container->get('request_stack')->getCurrentRequest()->get('_controller');
-        $resource = SecurityHelper::extractName($controller);
-
-        if (false === $this->get('security.authorization_checker')->isGranted($permission, $resource)) {
-            throw new AccessDeniedException('Unauthorised access!');
-        }
-    }
-
-    /**
      * Returns entity manager.
      *
      * @return \Doctrine\Common\Persistence\ObjectManager

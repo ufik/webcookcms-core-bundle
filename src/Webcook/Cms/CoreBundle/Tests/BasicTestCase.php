@@ -76,6 +76,24 @@ abstract class BasicTestCase extends WebTestCase
         print_r($this->client->getResponse()->getContent());
     }
 
+    protected function jsonRequest($method, $url, $data = array(), $addPostfix = true)
+    {
+        $this->createTestClient();
+
+        $crawler = $this->client->request(
+            $method,
+            $url . ($addPostfix ? '.json' : ''),
+            array(),
+            array(),
+            array(
+                'CONTENT_TYPE' => 'application/json'
+            ),
+            json_encode($data)
+        );
+
+        return $crawler;
+    }
+
     protected function logIn()
     {
         $session = $this->client->getContainer()->get('session');
