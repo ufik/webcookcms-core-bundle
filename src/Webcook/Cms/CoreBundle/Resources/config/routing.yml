@@ -7,6 +7,22 @@ webcook_cms_core_frontend_page:
     resource: "."
     type: webcookcms_page
 
+page_section_order:
+    path: '/api/page-section/{id}/order.{_format}'
+    methods:  ['PUT']
+    defaults:
+        _controller: 'WebcookCmsCoreBundle:Page:order'
+        _api_resource_class: 'Webcook\Cms\CoreBundle\Entity\Page'
+        _api_item_operation_name: 'section_order'
+
+menu_content:
+    path: '/api/content-providers/menu/settings/{pageId}/{sectionId}.{_format}'
+    methods:  ['GET']
+    defaults:
+        _controller: 'WebcookCmsCoreBundle:MenuContentProviderSettings:getMenuSettings'
+        _api_resource_class: 'Webcook\Cms\CoreBundle\Entity\MenuContentProviderSettings'
+        _api_item_operation_name: 'menu_content_get'
+
 api_platform:
     resource: '.'
     type:     'api_platform'

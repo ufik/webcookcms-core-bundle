@@ -7,10 +7,10 @@ class MenuContentProviderSettingsControllerTest extends \Webcook\Cms\CoreBundle\
     public function testGetSettings()
     {
         $this->createTestClient();
-        $this->client->request('GET', '/api/content-providers/menu/settings/1/1');
+        $this->client->request('GET', '/api/content-providers/menu/settings/1/1.json');
 
         $settings = $this->client->getResponse()->getContent();
-
+print_r($settings);
         $data = json_decode($settings, true);
         $this->assertEquals('Main', $data['page']['title']);
         $this->assertEquals('Menu', $data['section']['name']);
@@ -20,7 +20,7 @@ class MenuContentProviderSettingsControllerTest extends \Webcook\Cms\CoreBundle\
     public function testGetNonExistingSettings()
     {
         $this->createTestClient();
-        $this->client->request('GET', '/api/content-providers/menu/settings/1/2');
+        $this->client->request('GET', '/api/content-providers/menu/settings/1/2.json');
 
         $this->assertEquals(400, $this->client->getResponse()->getStatusCode());
     }
@@ -33,11 +33,9 @@ class MenuContentProviderSettingsControllerTest extends \Webcook\Cms\CoreBundle\
             'POST',
             '/api/content-providers/menu/settings',
             array(
-                'menu_content_provider_settings' => array(
-                    'page' => 1,
-                    'section' => 1,
-                    'parent' => 1
-                ),
+                'page' => 1,
+                'section' => 1,
+                'parent' => 1
             )
         );
 

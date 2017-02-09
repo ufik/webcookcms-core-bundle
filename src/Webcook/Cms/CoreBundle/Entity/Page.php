@@ -13,10 +13,16 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @Gedmo\Tree(type="nested")
- * @ApiResource(attributes={
- *     "denormalization_context"={"groups"={"write"}}
+ * @ApiResource(
+ *  itemOperations={
+ *     "get"={"method"="GET"},
+ *     "put"={"method"="PUT"},
+ *     "delete"={"method"="DELETE"},
+ *     "section_order"={"route_name"="page_section_order"}
  * })
+ *
+ * @Gedmo\Tree(type="nested")
+ *
  * @ORM\Table(name="Page")
  * @ORM\Entity(repositoryClass="Gedmo\Tree\Entity\Repository\NestedTreeRepository")
  * @ORM\HasLifecycleCallbacks

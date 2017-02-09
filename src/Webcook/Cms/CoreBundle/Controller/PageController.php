@@ -10,6 +10,7 @@ namespace Webcook\Cms\CoreBundle\Controller;
 
 use Webcook\Cms\CoreBundle\Base\BaseRestController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Webcook\Cms\CoreBundle\Entity\Page;
 use Webcook\Cms\CoreBundle\Entity\PageSection;
 use Webcook\Cms\CoreBundle\Form\Type\PageType;
@@ -28,69 +29,27 @@ use Doctrine\DBAL\LockMode;
 class PageController extends BaseRestController
 {
     /**
-     * Update Page.
+     * Update page section order.
      *
      * @param int $id Id of the desired Page.
      *
-     * @ApiDoc(
-     *  description="Update order of page section.",
-     *  input="Webcook\Cms\CoreBundle\Form\Type\PageSectionType"
-     * )
-     * @Put("/page-section/order/{id}", options={"i18n"=false})
      */
-    public function putPageSectionOrderAction($id)
+    public function orderAction($id)
     {
-        $this->checkPermission(WebcookCmsVoter::ACTION_EDIT);
-
+        $order = $this->getPutParameters('order');
         $pageSection = $this->getEntityManager()->getRepository('Webcook\Cms\CoreBundle\Entity\PageSection')->find($id);
 
         if (!is_null($pageSection)) {
-            $form = $this->createForm(PageSectionType::class);
-            $form = $this->formSubmit($form, 'PUT');
-            if ($form->isValid()) {
-                $data = $form->getData();
-                $pageSection->setOrder($data['order']);
-                $this->getEntityManager()->flush();
-
-                $statusCode = 204;
-                $message = 'Page section has been updated.';
-            } else {
-                $statusCode = 400;
-                $message = 'Given data are not valid.';
+            if (!is_numeric($order)) {
+                throw new BadRequestHttpException('Order is not numeric.');
             }
+
+            $pageSection->setOrder($order);
+            $this->getEntityManager()->flush();
         } else {
-            $statusCode = 404;
-            $message = 'Page section not found.';
+            throw new NotFoundHttpException('Page section does not exist.');
         }
 
-        $view = $this->getViewWithMessage(null, $statusCode, $message);
-
-        return $this->handleView($view);
-    }
-
-    /**
-     * Get Page by id.
-     *
-     * @param int $id [description]
-     *
-     * @return Page
-     *
-     * @throws NotFoundHttpException If Page doesn't exist
-     */
-    private function getPageById($id, $expectedVersion = null)
-    {
-        if ($expectedVersion) {
-            $page = $this->getEntityManager()->getRepository('Webcook\Cms\CoreBundle\Entity\Page')->find($id, LockMode::OPTIMISTIC, $expectedVersion);
-        } else {
-            $page = $this->getEntityManager()->getRepository('Webcook\Cms\CoreBundle\Entity\Page')->find($id);
-        }
-
-        if (!$page instanceof Page) {
-            throw new NotFoundHttpException('Page not found.');
-        }
-
-        $this->saveLockVersion($page);
-
-        return $page;
+        return $pageSection;
     }
 }
